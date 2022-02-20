@@ -36,7 +36,7 @@ const WalletCard = (props) => {
     <div
       className={`${
         props.model ? 'flex' : 'hidden'
-      } absolute top-0 left-0 z-[99] h-screen w-full items-center justify-center backdrop-blur-lg`}>
+      } absolute top-0 left-0 z-[99] h-screen w-full items-center justify-center !backdrop-blur-lg`}>
       <div className=" w-[90%] max-w-md rounded-lg bg-white/70 shadow-2xl backdrop-blur-sm dark:bg-slate-700/80 lg:w-[30%]">
         <div className="relative w-full rounded-t-lg bg-yellow-600 p-2 text-center text-slate-700">
           <h2 className="font-aclonica text-lg capitalize tracking-widest lg:text-2xl">
