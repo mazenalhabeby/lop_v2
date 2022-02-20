@@ -42,6 +42,13 @@ body::-webkit-scrollbar-thumb {
   @apply rounded-xl bg-yellow-600;
 }
 
-.bg__blure {
+.dropgray__bg {
+  backdrop-filter: blur(6px) grayscale(100%);
+}
+.drop__bg {
   backdrop-filter: blur(16px);
+}
+
+.drop__none {
+  backdrop-filter: none;
 }

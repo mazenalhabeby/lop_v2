@@ -58,7 +58,7 @@ const LangToggle = () => {
     icon__size: `w-7 h-7`,
     menu__wrapper: `${
       open ? 'flex' : 'hidden'
-    } absolute top-12 left-0 right-0 z-[99] flex-col items-center divide-y divide-yellow-400 rounded-b-lg bg-transparent p-2 shadow-lg backdrop-blur backdrop-grayscale backdrop-filter bg-white dark:bg-black bg-opacity-90 dark:bg-opacity-90 md:bg-opacity-50 md:dark:bg-opacity-20`,
+    } absolute top-12 left-0 right-0 z-[99] flex-col items-center divide-y divide-yellow-400 rounded-b-lg bg-transparent p-2 shadow-lg dropgray__bg bg-white dark:bg-black bg-opacity-90 dark:bg-opacity-90 md:bg-opacity-50 md:dark:bg-opacity-20`,
     item: `w-full p-2 text-center transition-all duration-300 ease-in-out hover:bg-yellow-600 hover:text-white`,
   }
   return (
