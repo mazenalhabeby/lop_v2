@@ -4,8 +4,8 @@ import Link from 'next/link'
 import React from 'react'
 
 const style = {
-  main__navbar__wrapper: ` w-full item-center flex flex-row lg:justify-end justify-center gap-4 border-b-[1px] border-gray-300 py-1 dark:border-gray-700`,
-  main__navbar__container: `container mx-auto`,
+  main__navbar__wrapper: `gap-4 border-b-[1px] border-gray-300 py-1 dark:border-gray-700`,
+  main__navbar__container: `container mx-auto flex flex-row lg:justify-end justify-center item-center`,
   nav__title: `text-sm lg:text-base`,
   links__wrapper: `flex flex-row items-center gap-3`,
   size: `w-4 lg:w-5 fill-slate-600 dark:fill-slate-200 `,
