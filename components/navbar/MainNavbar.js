@@ -4,7 +4,7 @@ import Link from 'next/link'
 import React from 'react'
 
 const style = {
-  main__navbar__wrapper: ` item-center flex flex-row lg:justify-end justify-center gap-4 border-b-[1px] border-gray-300 py-1 dark:border-gray-700`,
+  main__navbar__wrapper: ` w-full item-center flex flex-row lg:justify-end justify-center gap-4 border-b-[1px] border-gray-300 py-1 dark:border-gray-700`,
   main__navbar__container: `container mx-auto`,
   nav__title: `text-sm lg:text-base`,
   links__wrapper: `flex flex-row items-center gap-3`,
