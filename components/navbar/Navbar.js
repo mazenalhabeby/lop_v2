@@ -18,7 +18,7 @@ const style = {
   icon__btn: `text-slate-800 dark:text-white !outline-none`,
   btn__wrapper: `flex flex-col md:flex-row items-center justify-center gap-1 lg:gap-2 pb-4`,
   link__wrapper: `absolute top-16 w-1/2 transition-all duration-500 ease-in-out lg:static lg:top-0 lg:h-auto lg:w-auto flex flex-1`,
-  link__sub__wrapper: ` absolute flex h-[70vh] w-full flex-col items-center shadow-lg bg-white dark:bg-black dark:bg-opacity-20 bg-opacity-50 lg:static lg:h-auto lg:flex-grow lg:flex-row lg:flex-nowrap lg:bg-transparent lg:opacity-100 lg:shadow-none backdrop-blur-[6px] backdrop-grayscale md:backdrop-blur-none md:backdrop-grayscale-0`,
+  link__sub__wrapper: ` absolute flex h-[70vh] w-full flex-col items-center shadow-lg bg-white dark:bg-black dark:bg-opacity-20 bg-opacity-50 lg:static lg:h-auto lg:flex-grow lg:flex-row lg:flex-nowrap lg:bg-transparent lg:opacity-100 lg:shadow-none backdrop-blur-test`,
 }
 
 const Navbar = (props) => {

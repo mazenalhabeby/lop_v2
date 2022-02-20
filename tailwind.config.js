@@ -17,6 +17,9 @@ module.exports = {
       height: {
         links: 'calc(100vh - 20rem)',
       },
+      backdropBlur: {
+        test: '16px',
+      },
     },
   },
   plugins: [require('tailwindcss-neumorphism')],
