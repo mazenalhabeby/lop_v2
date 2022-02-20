@@ -41,3 +41,7 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
   @apply rounded-xl bg-yellow-600;
 }
+
+.bg__blure {
+  backdrop-filter: blur(16px);
+}
