@@ -49,6 +49,9 @@ body::-webkit-scrollbar-thumb {
   backdrop-filter: blur(16px);
 }
 
-.drop__none {
+.drop__sm {
   backdrop-filter: none;
+  @media (max-width: 1024px) {
+    backdrop-filter: blur(6px) grayscale(100%);
+  }
 }
