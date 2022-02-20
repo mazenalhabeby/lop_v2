@@ -1,35 +1,36 @@
+import {Web3Context} from 'context/web3Context'
 import Image from 'next/image'
 import React, {useContext} from 'react'
 import {RiCloseCircleFill} from 'react-icons/ri'
 
 const WalletCard = (props) => {
-  // const {
-  //   connetMetamask,
-  //   connectWalletConnect,
-  //   connectCoinbase,
-  //   disconnectMetamask,
-  //   account,
-  //   active,
-  //   error,
-  // } = useContext(Web3Context)
+  const {
+    connetMetamask,
+    connectWalletConnect,
+    connectCoinbase,
+    disconnectMetamask,
+    account,
+    active,
+    error,
+  } = useContext(Web3Context)
   const wallets = [
     {
       id: 1,
       walletName: 'Meta Mask',
       icon: '/images/icons/metamask.svg',
-      btnFunc: 'connetMetamask',
+      btnFunc: connetMetamask,
     },
     {
       id: 2,
       walletName: 'Wallet Connect',
       icon: '/images/icons/walletconnect.svg',
-      btnFunc: 'connectWalletConnect',
+      btnFunc: connectWalletConnect,
     },
     {
       id: 3,
       walletName: 'Coinbase',
       icon: '/images/icons/Coinbase.svg',
-      btnFunc: 'connectCoinbase',
+      btnFunc: connectCoinbase,
     },
   ]
   return (
@@ -53,8 +54,7 @@ const WalletCard = (props) => {
               <button
                 className="flex w-full flex-row rounded-lg bg-white/10 p-2 shadow-lg drop__bg hover:bg-white/80 dark:hover:bg-white/30"
                 key={wallet.id}
-                //onClick={wallet.btnFunc}
-              >
+                onClick={wallet.btnFunc}>
                 <Image
                   src={wallet.icon}
                   width={60}
@@ -70,17 +70,15 @@ const WalletCard = (props) => {
           <div className=" mx-auto h-[2px] w-4/5 bg-yellow-500"></div>
           <div className="flex flex-row justify-around">
             <div className="rounded-xl border-[1px] border-slate-300 bg-white/30 p-2 text-center shadow-lg">
-              {/* {active ? (
+              {active ? (
                 `${account.substr(0, 6)} ... ${account.substr(-4, 4)}`
               ) : (
                 <span>no connection </span>
-              )} */}
-              0x2245...6521
+              )}
             </div>
             <button
               className="rounded-xl bg-white/50 p-2 text-center capitalize text-inherit shadow-lg hover:bg-white/60"
-              //onClick={disconnectMetamask}
-            >
+              onClick={disconnectMetamask}>
               disconnect
             </button>
           </div>

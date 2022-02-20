@@ -1,3 +1,4 @@
+import Web3ContextProvider from 'context/web3Context'
 import {useRouter} from 'next/router'
 import React, {useEffect, useState} from 'react'
 
@@ -8,7 +9,11 @@ const ContainerLayout = ({children}) => {
   useEffect(() => {
     document.documentElement.dir = dir
   }, [dir])
-  return <>{children}</>
+  return (
+    <>
+      <Web3ContextProvider>{children}</Web3ContextProvider>
+    </>
+  )
 }
 
 export default ContainerLayout

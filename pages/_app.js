@@ -1,14 +1,23 @@
 import LayoutWrapper from '@/layouts/LayoutWrapper'
+import {Web3Provider} from '@ethersproject/providers'
+import {Web3ReactProvider} from '@web3-react/core'
 import {ThemeProvider} from 'next-themes'
 import App from 'next/app'
 import '../styles/globals.scss'
 
+function getLibrary(provider) {
+  const library = new Web3Provider(provider)
+  library.pollingInterval = 15000
+  return library
+}
 function MyApp({Component, pageProps}) {
   return (
     <ThemeProvider enableSystem={true} attribute="class">
-      <LayoutWrapper>
-        <Component {...pageProps} />
-      </LayoutWrapper>
+      <Web3ReactProvider getLibrary={getLibrary}>
+        <LayoutWrapper>
+          <Component {...pageProps} />
+        </LayoutWrapper>
+      </Web3ReactProvider>
     </ThemeProvider>
   )
 }

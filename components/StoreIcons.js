@@ -35,7 +35,7 @@ const StoreIcons = () => {
         return (
           <div
             key={obj.id}
-            className="item-center flex flex-row items-center justify-center  gap-2 rounded-lg bg-slate-100 p-2 shadow-xl shadow-gray-400 dark:bg-slate-900 dark:shadow-xl dark:shadow-slate-800">
+            className="item-center flex flex-row items-center justify-center  gap-2 rounded-lg bg-slate-100 p-2 shadow-xl shadow-gray-400 dark:bg-gray-900 dark:shadow-xl dark:shadow-slate-800">
             <Image
               src={`/images/${obj.fileName}.png`}
               width={35}
