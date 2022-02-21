@@ -2,11 +2,13 @@ import {InjectedConnector} from '@web3-react/injected-connector'
 import {WalletConnectConnector} from '@web3-react/walletconnect-connector'
 import {WalletLinkConnector} from '@web3-react/walletlink-connector'
 
+export const POLLING_INTERVAL = 12000
+
 const RPC_URLS = {
   1: process.env.NEXT_RPC_URL_1,
   4: process.env.NEXT_RPC_URL_4,
-  56: process.env.NEXT_RPC_URL_56,
-  137: process.env.NEXT_RPC_URL_137,
+  56: process.env.NEXT_RPC_URL_137,
+  137: process.env.NEXT_RPC_URL_56,
 }
 
 //metamask
@@ -15,14 +17,9 @@ export const injected = new InjectedConnector({
 })
 
 export const walletconnect = new WalletConnectConnector({
-  rpc: {
-    1: RPC_URLS[1],
-    4: RPC_URLS[4],
-    56: RPC_URLS[56],
-    137: RPC_URLS[137],
-  },
+  rpc: RPC_URLS,
+  chainId: 137,
   qrcode: true,
-  pollingInterval: 15000,
 })
 
 export function resetWalletConnector(connector) {
@@ -33,7 +30,7 @@ export function resetWalletConnector(connector) {
 
 //coinbase
 export const walletlink = new WalletLinkConnector({
-  url: RPC_URLS[137],
+  url: RPC_URLS,
   appName: 'league-of-pharaohs',
   supportedChainIds: [1, 4, 56, 137],
 })
@@ -65,5 +62,16 @@ export const networks = {
       'wss://bsc-ws-node.nariox.org',
     ],
     blockExplorerUrls: ['https://bscscan.com'],
+  },
+  polygon: {
+    chainId: `0x${Number(137).toString(16)}`,
+    chainName: 'Polygon Mainnet',
+    nativeCurrency: {
+      name: 'MATIC',
+      symbol: 'MATIC',
+      decimals: 18,
+    },
+    rpcUrls: ['https://polygon-rpc.com/'],
+    blockExplorerUrls: ['https://polygonscan.com/'],
   },
 }

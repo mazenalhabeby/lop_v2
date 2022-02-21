@@ -1,17 +1,17 @@
 import {Web3Context} from 'context/web3Context'
 import Image from 'next/image'
-import React, {useContext} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
+import toast from 'react-hot-toast'
 import {RiCloseCircleFill} from 'react-icons/ri'
 
 const WalletCard = (props) => {
+  const [errorMsg, setErrorMsg] = useState('')
   const {
     connetMetamask,
     connectWalletConnect,
     connectCoinbase,
     disconnectMetamask,
-    account,
-    active,
-    error,
+    web3reactContext,
   } = useContext(Web3Context)
   const wallets = [
     {
@@ -26,13 +26,14 @@ const WalletCard = (props) => {
       icon: '/images/icons/walletconnect.svg',
       btnFunc: connectWalletConnect,
     },
-    {
-      id: 3,
-      walletName: 'Coinbase',
-      icon: '/images/icons/Coinbase.svg',
-      btnFunc: connectCoinbase,
-    },
+    // {
+    //   id: 3,
+    //   walletName: 'Coinbase',
+    //   icon: '/images/icons/Coinbase.svg',
+    //   btnFunc: connectCoinbase,
+    // },
   ]
+
   return (
     <div
       className={`${
@@ -67,11 +68,14 @@ const WalletCard = (props) => {
               </button>
             )
           })}
-          <div className=" mx-auto h-[2px] w-4/5 bg-yellow-500"></div>
+          <div className=" h-[2px] w-full bg-yellow-500"></div>
           <div className="flex flex-row justify-around">
             <div className="rounded-xl border-[1px] border-slate-300 bg-white/30 p-2 text-center shadow-lg">
-              {active ? (
-                `${account.substr(0, 6)} ... ${account.substr(-4, 4)}`
+              {web3reactContext.active ? (
+                `${web3reactContext.account.substr(
+                  0,
+                  6
+                )} ... ${web3reactContext.account.substr(-4, 4)}`
               ) : (
                 <span>no connection </span>
               )}

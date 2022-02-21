@@ -8,12 +8,19 @@ import {
 } from 'helpers/connectors'
 
 import React, {createContext, useEffect, useState} from 'react'
+import toast from 'react-hot-toast'
 
 export const Web3Context = createContext()
 
 const Web3ContextProvider = (props) => {
-  const {active, account, activate, deactivate, error} = useWeb3React()
+  const web3reactContext = useWeb3React()
   const [metaMask, setMetaMask] = useState(false)
+
+  const errorMsg = (ex, toastHandler = toast) => {
+    toastHandler.error(ex, {
+      style: {},
+    })
+  }
 
   const injetedUser = (userMode) => {
     window.localStorage.setItem('userAccount', userMode)
@@ -38,8 +45,8 @@ const Web3ContextProvider = (props) => {
   //web3react metamask
   const connetMetamask = async () => {
     try {
-      await activate(injected)
-      handleNetworkSwitch('bsc')
+      await web3reactContext.activate(injected)
+      handleNetworkSwitch('polygon')
       setMetaMask(true)
     } catch (ex) {
       console.log(ex)
@@ -50,7 +57,7 @@ const Web3ContextProvider = (props) => {
   const connectWalletConnect = async () => {
     try {
       resetWalletConnector(walletconnect)
-      await activate(walletconnect)
+      await web3reactContext.activate(walletconnect)
     } catch (ex) {
       console.log(ex)
     }
@@ -59,7 +66,7 @@ const Web3ContextProvider = (props) => {
   //web3react coinbase
   const connectCoinbase = async () => {
     try {
-      await activate(walletlink)
+      await web3reactContext.activate(walletlink)
     } catch (ex) {
       console.log(ex)
     }
@@ -68,17 +75,27 @@ const Web3ContextProvider = (props) => {
   const disconnectMetamask = () => {
     try {
       window.localStorage.removeItem('userAccount')
-      deactivate()
+      web3reactContext.deactivate()
     } catch (ex) {
       console.log(ex)
     }
   }
 
   useEffect(() => {
-    if (active && metaMask) {
-      injetedUser(account)
+    if (web3reactContext.active && metaMask) {
+      injetedUser(web3reactContext.account)
     }
-  }, [account, active, metaMask])
+    if (web3reactContext.error)
+      return (async () => {
+        errorMsg(web3reactContext.error.message)
+      })()
+  }, [
+    metaMask,
+    web3reactContext,
+    web3reactContext.account,
+    web3reactContext.active,
+    web3reactContext.error,
+  ])
   return (
     <Web3Context.Provider
       value={{
@@ -86,9 +103,7 @@ const Web3ContextProvider = (props) => {
         connectWalletConnect,
         connectCoinbase,
         disconnectMetamask,
-        account,
-        active,
-        error,
+        web3reactContext,
       }}>
       {props.children}
     </Web3Context.Provider>
