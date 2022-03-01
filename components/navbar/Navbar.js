@@ -68,6 +68,7 @@ const Navbar = (props) => {
                     width={90}
                     height={60}
                     alt={'lop'}
+                    priority
                   />
                 </div>
               </a>

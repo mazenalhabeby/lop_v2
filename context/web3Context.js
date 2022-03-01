@@ -2,24 +2,41 @@ import {useWeb3React} from '@web3-react/core'
 import {
   injected,
   walletconnect,
-  walletlink,
   resetWalletConnector,
+  walletlink,
   networks,
 } from 'helpers/connectors'
 
 import React, {createContext, useEffect, useState} from 'react'
-import toast from 'react-hot-toast'
 
 export const Web3Context = createContext()
 
 const Web3ContextProvider = (props) => {
   const web3reactContext = useWeb3React()
-  const [metaMask, setMetaMask] = useState(false)
+  const [walletsConnection, setWalletsConnection] = useState('')
 
-  const errorMsg = (ex, toastHandler = toast) => {
-    toastHandler.error(ex, {
-      style: {},
-    })
+  function activateInjectedProvider(providerName) {
+    const {ethereum} = window
+
+    if (!ethereum?.providers) {
+      return undefined
+    }
+
+    let provider
+    switch (providerName) {
+      case 'CoinBase':
+        provider = ethereum.providers.find(
+          ({isCoinbaseWallet}) => isCoinbaseWallet
+        )
+        break
+      case 'MetaMask':
+        provider = ethereum.providers.find(({isMetaMask}) => isMetaMask)
+        break
+    }
+
+    if (provider) {
+      ethereum.setSelectedProvider(provider)
+    }
   }
 
   const injetedUser = (userMode) => {
@@ -28,6 +45,7 @@ const Web3ContextProvider = (props) => {
 
   const changeNetwork = async ({networkName}) => {
     if (!window.ethereum) throw new Error('No crypto wallet found')
+
     await window.ethereum.request({
       method: 'wallet_addEthereumChain',
       params: [
@@ -45,9 +63,10 @@ const Web3ContextProvider = (props) => {
   //web3react metamask
   const connetMetamask = async () => {
     try {
+      activateInjectedProvider('MetaMask')
       await web3reactContext.activate(injected)
       handleNetworkSwitch('polygon')
-      setMetaMask(true)
+      setWalletsConnection('metaMask')
     } catch (ex) {
       console.log(ex)
     }
@@ -58,15 +77,18 @@ const Web3ContextProvider = (props) => {
     try {
       resetWalletConnector(walletconnect)
       await web3reactContext.activate(walletconnect)
+      setWalletsConnection('connectWallet')
     } catch (ex) {
       console.log(ex)
     }
   }
 
-  //web3react coinbase
-  const connectCoinbase = async () => {
+  //web3react coinBase
+  const connetCoinbase = async () => {
     try {
+      activateInjectedProvider('CoinBase')
       await web3reactContext.activate(walletlink)
+      setWalletsConnection('coinbase')
     } catch (ex) {
       console.log(ex)
     }
@@ -81,29 +103,42 @@ const Web3ContextProvider = (props) => {
     }
   }
 
+  const changeNetworkBtn = async () => {
+    try {
+      // attempt to switch to Harmony One network
+      const result = await ethereum.send('wallet_switchEthereumChain', [
+        {chainId: `0x89`},
+      ])
+    } catch (switchError) {
+      // 4902 indicates that the client does not recognize the Harmony One network
+      if (switchError.code === 4902) {
+        await ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [
+            {
+              ...networks[networkName],
+            },
+          ],
+        })
+      }
+    }
+  }
+
   useEffect(() => {
-    if (web3reactContext.active && metaMask) {
+    if (web3reactContext.active) {
       injetedUser(web3reactContext.account)
     }
-    if (web3reactContext.error)
-      return (async () => {
-        errorMsg(web3reactContext.error.message)
-      })()
-  }, [
-    metaMask,
-    web3reactContext,
-    web3reactContext.account,
-    web3reactContext.active,
-    web3reactContext.error,
-  ])
+  }, [web3reactContext.account, web3reactContext.active])
   return (
     <Web3Context.Provider
       value={{
         connetMetamask,
         connectWalletConnect,
-        connectCoinbase,
         disconnectMetamask,
         web3reactContext,
+        walletsConnection,
+        connetCoinbase,
+        changeNetworkBtn,
       }}>
       {props.children}
     </Web3Context.Provider>

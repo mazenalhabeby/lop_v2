@@ -5,10 +5,10 @@ import {WalletLinkConnector} from '@web3-react/walletlink-connector'
 export const POLLING_INTERVAL = 12000
 
 const RPC_URLS = {
-  1: process.env.NEXT_RPC_URL_1,
-  4: process.env.NEXT_RPC_URL_4,
-  56: process.env.NEXT_RPC_URL_137,
-  137: process.env.NEXT_RPC_URL_56,
+  1: `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`,
+  4: `https://rinkeby.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`,
+  56: `https://bsc-dataseed.binance.org/`,
+  137: `https://polygon-mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`,
 }
 
 //metamask
@@ -17,7 +17,7 @@ export const injected = new InjectedConnector({
 })
 
 export const walletconnect = new WalletConnectConnector({
-  rpc: RPC_URLS,
+  rpc: {1: RPC_URLS[1], 137: RPC_URLS[137]},
   chainId: 137,
   qrcode: true,
 })
@@ -30,7 +30,7 @@ export function resetWalletConnector(connector) {
 
 //coinbase
 export const walletlink = new WalletLinkConnector({
-  url: RPC_URLS,
+  url: RPC_URLS[137],
   appName: 'league-of-pharaohs',
   supportedChainIds: [1, 4, 56, 137],
 })

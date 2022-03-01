@@ -1,7 +1,6 @@
 import Web3ContextProvider from 'context/web3Context'
 import {useRouter} from 'next/router'
-import React, {useEffect, useState} from 'react'
-import {Toaster} from 'react-hot-toast'
+import React, {useEffect} from 'react'
 
 const ContainerLayout = ({children}) => {
   const {locale} = useRouter()
@@ -12,10 +11,7 @@ const ContainerLayout = ({children}) => {
   }, [dir])
   return (
     <>
-      <Web3ContextProvider>
-        <Toaster position="top-center" reverseOrder={false} />
-        {children}
-      </Web3ContextProvider>
+      <Web3ContextProvider>{children}</Web3ContextProvider>
     </>
   )
 }

@@ -14,7 +14,7 @@ body {
 }
 
 body {
-  @apply bg-slate-100 text-slate-700 dark:bg-main-color-dark dark:text-white;
+  @apply bg-slate-100 text-slate-700 dark:bg-main-color-dark dark:text-white scroll-smooth;
 }
 
 body.active__model {
@@ -54,4 +54,8 @@ body::-webkit-scrollbar-thumb {
   @media (max-width: 1024px) {
     backdrop-filter: blur(6px) grayscale(100%);
   }
+}
+
+.dropgray {
+  backdrop-filter: grayscale(100%);
 }

@@ -1,17 +1,21 @@
 import {Web3Context} from 'context/web3Context'
 import Image from 'next/image'
-import React, {useContext, useEffect, useState} from 'react'
-import toast from 'react-hot-toast'
+import React, {useContext, useEffect} from 'react'
+import toast, {Toaster} from 'react-hot-toast'
 import {RiCloseCircleFill} from 'react-icons/ri'
+import {BsFillCheckCircleFill} from 'react-icons/bs'
+import CopyWapper from './CopyWapper'
 
 const WalletCard = (props) => {
-  const [errorMsg, setErrorMsg] = useState('')
   const {
     connetMetamask,
     connectWalletConnect,
-    connectCoinbase,
+    connetCoinbase,
     disconnectMetamask,
     web3reactContext,
+    walletsConnection,
+    changeNetwork,
+    changeNetworkBtn,
   } = useContext(Web3Context)
   const wallets = [
     {
@@ -19,26 +23,43 @@ const WalletCard = (props) => {
       walletName: 'Meta Mask',
       icon: '/images/icons/metamask.svg',
       btnFunc: connetMetamask,
+      wallet: 'metaMask',
     },
     {
       id: 2,
       walletName: 'Wallet Connect',
       icon: '/images/icons/walletconnect.svg',
       btnFunc: connectWalletConnect,
+      wallet: 'connectWallet',
     },
     // {
     //   id: 3,
     //   walletName: 'Coinbase',
     //   icon: '/images/icons/Coinbase.svg',
-    //   btnFunc: connectCoinbase,
+    //   btnFunc: connetCoinbase,
+    //   wallet: 'coinbase',
     // },
   ]
+
+  useEffect(() => {
+    if (web3reactContext.error && !web3reactContext.active) {
+      toast.error(web3reactContext.error.message)
+    }
+  }, [web3reactContext.active, web3reactContext.error])
 
   return (
     <div
       className={`${
         props.model ? 'flex' : 'hidden'
       } absolute top-0 left-0 z-[99] h-screen w-full items-center justify-center dropgray__bg`}>
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        toastOptions={{
+          // Define default options
+          className: 'bg-white dark:bg-slate-700 dark:text-white',
+        }}
+      />
       <div className=" w-[90%] max-w-md rounded-lg bg-white/70 shadow-2xl drop__bg dark:bg-slate-700/80 lg:w-[30%]">
         <div className="relative w-full rounded-t-lg bg-yellow-600 p-2 text-center text-slate-700">
           <h2 className="font-aclonica text-lg capitalize tracking-widest lg:text-2xl">
@@ -53,9 +74,13 @@ const WalletCard = (props) => {
           {wallets.map((wallet) => {
             return (
               <button
-                className="flex w-full flex-row rounded-lg bg-white/10 p-2 shadow-lg drop__bg hover:bg-white/80 dark:hover:bg-white/30"
+                className=" relative flex w-full flex-row rounded-lg bg-white/10 p-2 shadow-lg drop__bg hover:bg-white/80 dark:hover:bg-white/30 disabled:text-gray-400 disabled:hover:bg-white/10 disabled:dark:bg-white/0"
                 key={wallet.id}
-                onClick={wallet.btnFunc}>
+                onClick={wallet.btnFunc}
+                disabled={web3reactContext.active}>
+                {web3reactContext.active && (
+                  <div className=" absolute w-full h-full z-10 top-0 left-0 rounded-lg dropgray"></div>
+                )}
                 <Image
                   src={wallet.icon}
                   width={60}
@@ -65,24 +90,44 @@ const WalletCard = (props) => {
                 <h2 className=" text-lg capitalize tracking-wider">
                   {wallet.walletName}
                 </h2>
+                {web3reactContext.active &&
+                  wallet.wallet === walletsConnection && (
+                    <div className="flex items-end justify-end flex-1 h-full z-20">
+                      <BsFillCheckCircleFill className=" text-3xl dark:text-green-400 text-green-500 " />
+                    </div>
+                  )}
               </button>
             )
           })}
           <div className=" h-[2px] w-full bg-yellow-500"></div>
-          <div className="flex flex-row justify-around">
-            <div className="rounded-xl border-[1px] border-slate-300 bg-white/30 p-2 text-center shadow-lg">
-              {web3reactContext.active ? (
-                `${web3reactContext.account.substr(
-                  0,
-                  6
-                )} ... ${web3reactContext.account.substr(-4, 4)}`
-              ) : (
-                <span>no connection </span>
-              )}
-            </div>
+          <div className="flex flex-row justify-between">
+            {!web3reactContext.active && (
+              <div className="cursor-default dark:text-gray-400 dark:bg-white/10 dark:border-slate-500 text-gray-400 bg-white/10 border-slate-200 rounded-xl border-[1px] text-center shadow-lg w-[176.52px] h-[48px] items-center flex justify-center">
+                no wallet detacted
+              </div>
+            )}
+            {web3reactContext.active && (
+              <div>
+                <CopyWapper
+                  type={'text'}
+                  content={`${web3reactContext.account.substr(
+                    0,
+                    6
+                  )} ... ${web3reactContext.account.substr(-4, 4)}`}
+                  value={web3reactContext.account}
+                  contentName={'Wallet'}
+                  inputId={'wallet-address'}
+                  copiedMsgStyle={'text-sm lg:text-md'}
+                />
+              </div>
+            )}
+            {web3reactContext.active && web3reactContext.chainId !== 137 && (
+              <button onClick={changeNetworkBtn}>change network</button>
+            )}
             <button
-              className="rounded-xl bg-white/50 p-2 text-center capitalize text-inherit shadow-lg hover:bg-white/60"
-              onClick={disconnectMetamask}>
+              className="rounded-xl bg-white/50 dark:bg-slate-800 p-2 text-center capitalize text-inherit shadow-lg hover:bg-white/60 disabled:text-gray-400 disabled:hover:bg-white/0 disabled:dark:bg-white/10 disabled:dark:text-gray-400"
+              onClick={disconnectMetamask}
+              disabled={!web3reactContext.active}>
               disconnect
             </button>
           </div>
