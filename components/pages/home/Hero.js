@@ -1,6 +1,7 @@
 import StoreIcons from '@/components/StoreIcons'
 import {Button} from '@mui/material'
 import useTranslation from 'next-translate/useTranslation'
+import Link from 'next/link'
 import React from 'react'
 
 const style = {
@@ -11,7 +12,7 @@ const style = {
   box__down: `flex flex-col h-[60%] w-full items-center justify-center md:justify-end bg-slate-200 dark:bg-black text-slate-700 dark:text-white space-y-2 pb-6 bg-[url(/images/bg-white.png)] dark:bg-[url(/images/bg-black.png)]`,
   title: `text-center font-aclonica text-lg md:text-2xl lg:text-3xl uppercase leading-10 tracking-widest`,
   button__wrapper: `flex flex-row gap-4`,
-  button: `bg-yellow-600 text-white hover:bg-yellow-500`,
+  button: `bg-yellow-600 text-white hover:bg-yellow-500 z-[1]`,
   button__outline: `rounded-md border-2 border-yellow-600 text-slate-800 hover:border-2 hover:border-yellow-600 hover:bg-yellow-600 hover:text-white dark:text-white`,
   sub__title: `text-xl capitalize tracking-wider font-aclonica`,
   divider: `h-[2px] w-full rounded-full bg-yellow-600 my-2`,
@@ -42,7 +43,9 @@ const Hero = () => {
           </h1>
           <div className={style.button__wrapper}>
             <Button className={style.button} variant="contained">
-              {t('whitePaper')}
+              <Link href={'/white-paper'}>
+                <a>{t('whitePaper')}</a>
+              </Link>
             </Button>
             <Button variant="outlined" className={style.button__outline}>
               {t('buyLop')}

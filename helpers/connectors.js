@@ -1,6 +1,5 @@
 import {InjectedConnector} from '@web3-react/injected-connector'
 import {WalletConnectConnector} from '@web3-react/walletconnect-connector'
-import {WalletLinkConnector} from '@web3-react/walletlink-connector'
 
 export const POLLING_INTERVAL = 12000
 
@@ -27,13 +26,6 @@ export function resetWalletConnector(connector) {
     connector.walletConnectProvider = undefined
   }
 }
-
-//coinbase
-export const walletlink = new WalletLinkConnector({
-  url: RPC_URLS[137],
-  appName: 'league-of-pharaohs',
-  supportedChainIds: [1, 4, 56, 137],
-})
 
 //network
 export const networks = {

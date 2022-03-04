@@ -34,12 +34,18 @@ body::-webkit-scrollbar {
   width: 0.5rem;
 }
 
-body::-webkit-scrollbar-track {
+body::-webkit-scrollbar-track,
+.scroll::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
-body::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb,
+.scroll::-webkit-scrollbar-thumb {
   @apply rounded-xl bg-yellow-600;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 4px;
 }
 
 .dropgray__bg {

@@ -3,7 +3,6 @@ import {
   injected,
   walletconnect,
   resetWalletConnector,
-  walletlink,
   networks,
 } from 'helpers/connectors'
 
@@ -83,17 +82,6 @@ const Web3ContextProvider = (props) => {
     }
   }
 
-  //web3react coinBase
-  const connetCoinbase = async () => {
-    try {
-      activateInjectedProvider('CoinBase')
-      await web3reactContext.activate(walletlink)
-      setWalletsConnection('coinbase')
-    } catch (ex) {
-      console.log(ex)
-    }
-  }
-
   const disconnectMetamask = () => {
     try {
       window.localStorage.removeItem('userAccount')
@@ -137,7 +125,6 @@ const Web3ContextProvider = (props) => {
         disconnectMetamask,
         web3reactContext,
         walletsConnection,
-        connetCoinbase,
         changeNetworkBtn,
       }}>
       {props.children}

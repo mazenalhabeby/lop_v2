@@ -5,16 +5,16 @@ import toast, {Toaster} from 'react-hot-toast'
 import {RiCloseCircleFill} from 'react-icons/ri'
 import {BsFillCheckCircleFill} from 'react-icons/bs'
 import CopyWapper from './CopyWapper'
+import {MdWarning} from 'react-icons/md'
+import {HiRefresh} from 'react-icons/hi'
 
 const WalletCard = (props) => {
   const {
     connetMetamask,
     connectWalletConnect,
-    connetCoinbase,
     disconnectMetamask,
     web3reactContext,
     walletsConnection,
-    changeNetwork,
     changeNetworkBtn,
   } = useContext(Web3Context)
   const wallets = [
@@ -99,6 +99,17 @@ const WalletCard = (props) => {
               </button>
             )
           })}
+          {web3reactContext.active && web3reactContext.chainId !== 137 && (
+            <div className="flex flex-row justify-center items-center gap-2 nm-flat-white dark:nm-flat-slate-700-lg p-2 mx-auto rounded-lg w-max">
+              <MdWarning className="text-red-500 text-2xl" />
+              <p>Switch network</p>
+              <button
+                onClick={changeNetworkBtn}
+                className="bg-yellow-600 py-2 px-1 rounded-md shadow-lg">
+                <HiRefresh className="text-lg" />
+              </button>
+            </div>
+          )}
           <div className=" h-[2px] w-full bg-yellow-500"></div>
           <div className="flex flex-row justify-between">
             {!web3reactContext.active && (
@@ -120,9 +131,6 @@ const WalletCard = (props) => {
                   copiedMsgStyle={'text-sm lg:text-md'}
                 />
               </div>
-            )}
-            {web3reactContext.active && web3reactContext.chainId !== 137 && (
-              <button onClick={changeNetworkBtn}>change network</button>
             )}
             <button
               className="rounded-xl bg-white/50 dark:bg-slate-800 p-2 text-center capitalize text-inherit shadow-lg hover:bg-white/60 disabled:text-gray-400 disabled:hover:bg-white/0 disabled:dark:bg-white/10 disabled:dark:text-gray-400"

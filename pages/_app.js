@@ -1,6 +1,7 @@
 import LayoutWrapper from '@/layouts/LayoutWrapper'
 import {Web3Provider} from '@ethersproject/providers'
 import {Web3ReactProvider} from '@web3-react/core'
+import {AnimatePresence} from 'framer-motion'
 import {ThemeProvider} from 'next-themes'
 import App from 'next/app'
 import '../styles/globals.scss'
@@ -14,9 +15,11 @@ function MyApp({Component, pageProps}) {
   return (
     <ThemeProvider enableSystem={true} attribute="class">
       <Web3ReactProvider getLibrary={getLibrary}>
-        <LayoutWrapper>
-          <Component {...pageProps} />
-        </LayoutWrapper>
+        <AnimatePresence exitBeforeEnter>
+          <LayoutWrapper>
+            <Component {...pageProps} />
+          </LayoutWrapper>
+        </AnimatePresence>
       </Web3ReactProvider>
     </ThemeProvider>
   )

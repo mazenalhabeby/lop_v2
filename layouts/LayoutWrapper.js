@@ -1,10 +1,12 @@
 import React from 'react'
 import DefaultLayout from './DefaultLayout'
 import HomeLayout from './HomeLayout'
+import WhitePaper from './WhitePaper'
 
 const layouts = {
   default: DefaultLayout,
   home: HomeLayout,
+  whitePaper: WhitePaper,
 }
 
 const LayoutWrapper = (props) => {
