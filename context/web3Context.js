@@ -43,16 +43,15 @@ const Web3ContextProvider = (props) => {
   }
 
   const changeNetwork = async ({networkName}) => {
-    if (!window.ethereum) throw new Error('No crypto wallet found')
-
-    await window.ethereum.request({
-      method: 'wallet_addEthereumChain',
-      params: [
-        {
-          ...networks[networkName],
-        },
-      ],
-    })
+    if (window.ethereum)
+      await window.ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: [
+          {
+            ...networks[networkName],
+          },
+        ],
+      })
   }
 
   const handleNetworkSwitch = async (networkName) => {

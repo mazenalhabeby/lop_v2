@@ -65,3 +65,15 @@ body::-webkit-scrollbar-thumb,
 .dropgray {
   backdrop-filter: grayscale(100%);
 }
+
+.wp_bg {
+  background: rgb(162, 111, 55);
+  background: linear-gradient(
+    90deg,
+    rgba(162, 111, 55, 1) 0%,
+    rgba(233, 190, 147, 1) 20%,
+    rgba(241, 221, 193, 1) 50%,
+    rgba(233, 190, 147, 1) 80%,
+    rgba(162, 111, 55, 1) 100%
+  );
+}
